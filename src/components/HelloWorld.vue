@@ -8,7 +8,7 @@
           href="https://vuejs.org"
           target="_blank"
         >
-          Core Docs
+          Core Docs {{$t('route.dashboard')}}
         </a>
       </li>
       <li>
@@ -24,7 +24,7 @@
           href="https://chat.vuejs.org"
           target="_blank"
         >
-          Community Chat
+          Community Chat 
         </a>
       </li>
       <li>
@@ -80,6 +80,9 @@
         </a>
       </li>
     </ul>
+    <Select v-model="model8" clearable style="width:200px" @on-change='change'>
+        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>
   </div>
 </template>
 
@@ -89,22 +92,31 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      cityList: [
+                    {
+                        value: 'zh',
+                        label: '中文'
+                    },
+                    {
+                        value: 'en',
+                        label: '英文'
+                    }
+                ],
+                model8: ''
     }
   },
-  mounted(){
-    getData({
-os: 'ios',
-for_mobile: 1,
-callback: 'jsonp1',
-start: 0,
-count: 18,
-loc_id: 108288,
-_: 0
-    }).then((res)=>{
-      console.log(res)
-    })
+  methods:{
+  change(lang){
+    this.$i18n.locale = lang;
+    if(lang==='zh'){
+      this.$Message.info('中文');
+    }
+    else if(lang==='en'){
+        this.$Message.info('英文');
+    }
   }
+}
 }
 </script>
 
